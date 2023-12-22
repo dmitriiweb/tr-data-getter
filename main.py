@@ -51,7 +51,9 @@ def main(
         end_date=end_date or datetime.now(),
     )
     data_getter = dg.getters.get_data_getter(config)
-    data_getter.get_data()
+    data = data_getter.get_data()
+    saver = dg.savers.CsvDataSaver(config)
+    saver.save(data)
 
 
 if __name__ == "__main__":
