@@ -24,3 +24,14 @@ class Config:
     data_getter: DataGetter
     symbol: str
     output_file: Path
+
+
+@dataclass
+class OHLCResult:
+    symbol: str
+    date: datetime
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: float
