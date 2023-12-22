@@ -1,7 +1,11 @@
-import typer
-from pathlib import Path
 from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Optional
+
+import typer
 from typing_extensions import Annotated
+
+import data_getter as dg
 
 
 def main(
@@ -25,23 +29,28 @@ def main(
         ),
     ] = "bitstamp",
     start_date: Annotated[
-        datetime,
+        Optional[datetime],
         typer.Option(
             "--start-date",
-            "-s",
             help="Start date of data to fetch, if not specified, will use datetime.now() - 365 days",
         ),
     ] = None,
     end_date: Annotated[
-        datetime,
+        Optional[datetime],
         typer.Option(
             "--end-date",
-            "-e",
             help="End date of data to fetch, if not specified, will use datetime.now()",
         ),
     ] = None,
 ):
-    pass
+    config = dg.Config(
+        symbol=symbol,
+        output_file=output_file,
+        data_getter=dg.DataGetter.from_string(data_getter),
+        start_date=start_date or datetime.now() - timedelta(days=365),
+        end_date=end_date or datetime.now(),
+    )
+    print(config)
 
 
 if __name__ == "__main__":
