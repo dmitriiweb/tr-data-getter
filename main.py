@@ -50,7 +50,8 @@ def main(
         start_date=start_date or datetime.now() - timedelta(days=365),
         end_date=end_date or datetime.now(),
     )
-    print(config)
+    data_getter = dg.getters.get_data_getter(config)
+    data_getter.get_data()
 
 
 if __name__ == "__main__":
