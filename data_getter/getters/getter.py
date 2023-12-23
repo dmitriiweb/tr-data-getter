@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Iterator
 
 from data_getter import schemas
 
@@ -8,5 +9,5 @@ class DataGetter(ABC):
         self.config = config
 
     @abstractmethod
-    def get_data(self) -> list[schemas.OHLCResult]:
+    def get_data(self) -> Iterator[list[schemas.OHLCResult]]:
         ...

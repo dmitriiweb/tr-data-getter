@@ -2,10 +2,21 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
+import pandas as pd
 import typer
 from typing_extensions import Annotated
 
 import data_getter as dg
+
+
+def data_postprocessing(config: dg.schemas.Config):
+    df = pd.read_csv(config.output_file)
+    df.drop_duplicates(inplace=True)
+    df["date"] = pd.to_datetime(df["date"])
+    df = df[df["date"] >= config.start_date]
+    df = df[df["date"] <= config.end_date]
+    df.sort_values(by=["date"], inplace=True)
+    df.to_csv(config.output_file, index=False)
 
 
 def main(
@@ -51,9 +62,12 @@ def main(
         end_date=end_date or datetime.now(),
     )
     data_getter = dg.getters.get_data_getter(config)
-    data = data_getter.get_data()
+    datas = data_getter.get_data()
     saver = dg.savers.CsvDataSaver(config)
-    saver.save(data)
+    for data in datas:
+        saver.save(data)
+
+    data_postprocessing(config)
 
 
 if __name__ == "__main__":
