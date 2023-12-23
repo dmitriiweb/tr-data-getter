@@ -1,6 +1,6 @@
 # tr-data-getter
 
-Tools to download 1-minute OHLC data from bitstamp.net
+Tool to download 1-minute OHLC data from bitstamp.net
 
 
 ## Installation
