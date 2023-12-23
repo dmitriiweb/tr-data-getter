@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "data-getter"
-version = "0.1.0"
+version = "0.1.0b"
 description = "Get stock data from various sources like bitstamp.net"
 authors = ["Dmitrii K <dmitriik@protonmail.com>"]
 readme = "README.md"
